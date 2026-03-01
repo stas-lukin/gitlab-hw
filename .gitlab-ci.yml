@@ -1,0 +1,41 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build-job:
+  stage: build
+  tags:
+    - docker
+    - linux
+  script:
+    - echo "Building application..."
+    - mkdir -p build
+    - echo "Hello World" > build/index.html
+  artifacts:
+    paths:
+      - build/
+
+test-job:
+  stage: test
+  tags:
+    - docker
+    - linux
+  script:
+    - echo "Testing application..."
+    - test -f build/index.html
+  dependencies:
+    - build-job
+
+deploy-job:
+  stage: deploy
+  tags:
+    - docker
+    - linux
+  script:
+    - echo "Deploying application..."
+    - ls -la build/
+  dependencies:
+    - build-job
+  only:
+    - main
