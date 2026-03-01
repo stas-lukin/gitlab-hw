@@ -1,6 +1,5 @@
-# Домашнее задание: GitLab CI/CD
-
 **Студент:** Лукин Станислав
+**Дата:** 2026-03-01
 
 ## Задание 1. Развертывание GitLab и настройка runner
 
@@ -29,11 +28,10 @@ sudo sed -i "s/external_url 'http:\/\/gitlab.example.com'/external_url 'http:\/\
 
 # Применение конфигурации
 sudo gitlab-ctl reconfigure
-
-
-#Настройка GitLab Runner
-
+### Настройка GitLab Runner
 На втором сервере (93.77.185.120) был установлен и зарегистрирован GitLab Runner:
+
+```bash
 # Установка Docker
 sudo apt update
 sudo apt install -y docker.io
@@ -48,10 +46,21 @@ sudo gitlab-runner start
 
 # Регистрация runner
 sudo gitlab-runner register
+**Параметры регистрации:**
+- **URL**: http://93.77.190.230
+- **Token**: glrt-VBvfJfNYGlhEG7HBYYkdfm86MQpwOjEKdDozCnU6MQ8.01.171ob1yne
+- **Описание**: docker-runner
+- **Теги**: docker, linux
+- **Executor**: docker
+- **Образ по умолчанию**: alpine:latest
 
+### Результат настройки runner
+![GitLab Runner](screenshots/runner.png)
 
-#Задание 2. CI/CD пайплайн
-Файл .gitlab-ci.yml
+## Задание 2. CI/CD пайплайн
+
+### Файл .gitlab-ci.yml
+```yaml
 stages:
   - build
   - test
@@ -93,4 +102,15 @@ deploy-job:
     - build-job
   only:
     - main
+### Результат выполнения пайплайна
+![GitLab CI Pipeline](screenshots/pipeline.png)
 
+### Содержимое .gitlab-ci.yml в репозитории
+![GitLab CI Configuration](screenshots/gitlab-ci.png)
+
+## Ссылки
+- **Репозиторий с решением**: https://github.com/stas-lukin/gitlab-hw
+- **GitLab сервер**: http://93.77.190.230
+
+## Вывод
+Все задания выполнены в полном объеме, результаты подтверждены скриншотами.
